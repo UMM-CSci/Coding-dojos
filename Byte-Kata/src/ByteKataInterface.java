@@ -17,6 +17,8 @@ public interface ByteKataInterface {
 	public ByteKataInterface nand(ByteKataInterface byteKata);
 	public ByteKataInterface nor(ByteKataInterface byteKata);
 	//This is hard, do it later.
-	public Integer convertToNumeric(ByteKataInterface byteKata);
+	public Integer convertToNumeric();
+	public ByteKataInterface add(ByteKataInterface byteKata);
+	public String toHEX();
 	
 }

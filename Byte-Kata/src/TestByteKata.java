@@ -90,4 +90,85 @@ public class TestByteKata{
 	
 		assertTrue(xorTester.xor(xorTester2).equals(expectedXor));
 	}
+	
+	@Test
+	public void testNor() {
+		Integer[] byteArray = {1, 1, 1, 0, 0, 1, 0, 1};
+		Integer[] byteArray2 = {0, 0, 1, 1, 0, 1, 0, 0};
+		Integer[] expected = {0, 0, 0, 0, 1, 0, 1, 0};
+		ByteKata norTester = new ByteKata(byteArray);
+		ByteKata norTester2 = new ByteKata(byteArray2);
+		ByteKata expectedNor = new ByteKata(expected);
+		
+		assertTrue(norTester.nor(norTester2).equals(expectedNor));
+	}
+	
+	@Test
+	public void testToNumeric() {
+		Integer[] byteArray = {1, 1, 1, 0, 0, 1, 0, 1};
+		ByteKata norTester = new ByteKata(byteArray);
+		Integer expected = 229;
+		
+		assertTrue(norTester.convertToNumeric().equals(expected));
+		
+		Integer[] byteArray2 = {1, 1, 1, 1, 1, 1, 1, 1};
+		norTester = new ByteKata(byteArray2);
+		expected = 255;
+		
+		assertTrue(norTester.convertToNumeric().equals(expected));
+		
+		Integer[] byteArray3 = {0, 0, 0, 0, 0, 0, 0, 0};
+		norTester = new ByteKata(byteArray3);
+		expected = 0;
+		
+		assertTrue(norTester.convertToNumeric().equals(expected));
+	}
+	
+	
+	@Test
+	public void testNand() {
+		Integer[] byteArray = {1, 1, 1, 0, 0, 1, 0, 1};
+		Integer[] byteArray2 = {0, 0, 1, 1, 0, 1, 0, 0};
+		Integer[] expected = {1, 1, 0, 1, 1, 0, 1, 1};
+		ByteKata nandTester = new ByteKata(byteArray);
+		ByteKata nandTester2 = new ByteKata(byteArray2);
+		ByteKata expectedNand = new ByteKata(expected);
+		
+		assertTrue(nandTester.nand(nandTester2).equals(expectedNand));
+	}
+	
+	@Test
+	public void testAdd() {
+		Integer[] byteArray = {1, 1, 1, 0, 0, 1, 0, 1};
+		Integer[] byteArray2 = {0, 0, 1, 1, 0, 1, 0, 0};
+		Integer[] expected = {0, 0, 0, 1, 1, 0, 0, 1};
+		ByteKata nandTester = new ByteKata(byteArray);
+		ByteKata nandTester2 = new ByteKata(byteArray2);
+		ByteKata expectedNand = new ByteKata(expected);
+		
+		
+		assertTrue(nandTester.add(nandTester2).equals(expectedNand));
+	}
+	
+	@Test
+	public void testAdd2() {
+		Integer[] byteArray = {1, 1, 1, 1, 1, 1, 1, 1};
+		Integer[] byteArray2 = {1, 1, 1, 1, 1, 1, 1, 1};
+		Integer[] expected = {0, 0, 0, 0, 0, 0, 0, 0};
+		ByteKata nandTester = new ByteKata(byteArray);
+		ByteKata nandTester2 = new ByteKata(byteArray2);
+		ByteKata expectedNand = new ByteKata(expected);
+		
+		
+		assertTrue(nandTester.add(nandTester2).equals(expectedNand));
+	}
+	
+	@Test
+	public void testHEX() {
+		Integer[] byteArray = {1, 0, 1, 1, 1, 1, 0, 0};
+		ByteKata hexTester = new ByteKata(byteArray);
+		String expected = "BC";
+		
+		assertTrue(hexTester.toHEX().equals(expected));
+	}
 }

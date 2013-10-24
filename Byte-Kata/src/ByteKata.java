@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public class ByteKata implements ByteKataInterface {
 	//We want to make two constructors
 	//1. A constructor that takes a collection 
@@ -5,8 +7,24 @@ public class ByteKata implements ByteKataInterface {
 
 	//2. Later, a constructor that takes a numeric value
 	private Integer[] array;
+	HashMap<Integer, Integer> bitValues = new HashMap<Integer, Integer>();
+	HashMap<Integer, String> hexaValues = new HashMap<Integer, String>();
 	public ByteKata(Integer[] array) {
 		this.array = array;
+		bitValues.put(0, 128);
+		bitValues.put(1, 64);
+		bitValues.put(2, 32);
+		bitValues.put(3, 16);
+		bitValues.put(4, 8);
+		bitValues.put(5, 4);
+		bitValues.put(6, 2);
+		bitValues.put(7, 1);
+		hexaValues.put(10, "A");
+		hexaValues.put(11, "B");
+		hexaValues.put(12, "C");
+		hexaValues.put(13, "D");
+		hexaValues.put(14, "E");
+		hexaValues.put(15, "F");
 	}
 
 	@Override
@@ -65,20 +83,23 @@ public class ByteKata implements ByteKataInterface {
 
 	@Override
 	public ByteKataInterface nand(ByteKataInterface byteKata) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.and(byteKata).not();
 	}
 
 	@Override
 	public ByteKataInterface nor(ByteKataInterface byteKata) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.or(byteKata).not();
 	}
 
 	@Override
-	public Integer convertToNumeric(ByteKataInterface byteKata) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer convertToNumeric() {
+		Integer toReturn = 0;
+		for (int i = 0; i < this.array.length; i++) {
+			Integer bitValue = this.bitValues.get(i);
+			Integer arrayValue = this.array[i];
+			toReturn += bitValue*arrayValue;
+		}
+		return toReturn;
 	}
 
 	@Override
@@ -94,6 +115,7 @@ public class ByteKata implements ByteKataInterface {
 
 	@Override
 	public Integer getValue(int index) {
+		
 		return array[index];
 	}
 
@@ -112,5 +134,51 @@ public class ByteKata implements ByteKataInterface {
 		toString = toString.substring(0, toString.length() -2);
 		toString += "]";
 		return toString;
+	}
+
+	@Override
+	public ByteKataInterface add(ByteKataInterface byteKata) {
+		Integer carry = 0;
+		Integer[] results = new Integer[8];
+		for(int i = 7;i >= 0;i--){
+			Integer self = this.array[i];
+			Integer other = byteKata.getValue(i);
+			Integer result = self + other + carry;
+			carry= result>=2  ?  1:0;
+			result = result%2;
+			results[i] = result;
+		}
+		return new ByteKata(results);
+	}
+	
+	@Override
+	public String toHEX() {
+		String toReturn = "";
+		Integer firstHalf = 0;
+		firstHalf += bitValues.get(4)*array[0];
+		firstHalf += bitValues.get(5)*array[1];
+		firstHalf += bitValues.get(6)*array[2];
+		firstHalf += bitValues.get(7)*array[3];
+		
+		Integer secondHalf = 0; 
+		secondHalf += bitValues.get(0)*array[0];
+		secondHalf += bitValues.get(1)*array[1];
+		secondHalf += bitValues.get(2)*array[2];
+		secondHalf += bitValues.get(3)*array[3];
+		String firstString = "";
+		String secondString = "";
+		if(firstHalf > 9){
+			firstString = hexaValues.get(firstHalf);
+		} else {
+			firstString = firstHalf.toString();
+		}
+		if(secondHalf > 9){
+			secondString = hexaValues.get(secondHalf);
+		} else {
+			secondString = secondHalf.toString();
+		}
+		toReturn = firstString + secondString;
+		
+		return toReturn;
 	}
 }
