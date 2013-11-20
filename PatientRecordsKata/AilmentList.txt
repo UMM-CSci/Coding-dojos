@@ -1,0 +1,14 @@
+id,ailment
+1,cold
+2,fever
+3,extreme pain
+4,watery eyes
+5,minor pain
+6,bleeding
+7,bruising
+8,sweating
+9,bloating
+10,lump
+11,cramps
+12,bumps
+13,constipation

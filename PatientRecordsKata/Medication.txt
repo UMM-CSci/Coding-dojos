@@ -1,0 +1,9 @@
+id,medication
+1,amoxicillin
+2,penicillin
+3,vicadin
+4,oxycotton
+5,medical marijuana
+6,claritin
+7,bandages
+8,homeotherapy
