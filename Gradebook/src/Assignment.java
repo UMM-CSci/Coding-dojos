@@ -12,7 +12,17 @@ public class Assignment {
 		this.score = score;
 		this.dueDate = date;
 	}
+	
+	public Assignment(String name, int ptsPoss, String date) {
+		this.name = name;
+		this.pointsPossible = ptsPoss;
+		this.dueDate = date;
+	}
 
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
 	public String getName() {
 		return this.name;
 	}
@@ -30,7 +40,10 @@ public class Assignment {
 	}
 
 	public double getPercentage() {
-		return (score*1.0)/pointsPossible;
+		if (pointsPossible > 0) {
+			return (score * 1.0) / pointsPossible;
+		} 
+		return 1;
 	}
 
 	public String getLetterScore() {

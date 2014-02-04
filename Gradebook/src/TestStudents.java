@@ -48,5 +48,15 @@ public class TestStudents {
 		bill.assign(lab2);
 		bill.assign(lab3);
 		assertTrue(bill.getLetterGrade() == "C");
+		
+	}
+	@Test
+	public void testEstimateFinalGrade() {
+		bill.assign(lab1);
+		bill.assign(lab2);
+		bill.assign(lab3);
+		assertEquals(bill.estimateFinalGrade("A", 40), -1);
+		assertEquals(bill.estimateFinalGrade("C", 40), 25);
+		assertEquals(bill.estimateFinalGrade("F", 40), 0);
 	}
 }
