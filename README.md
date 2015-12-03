@@ -1,4 +1,3 @@
-Coding-dojos
-============
+# Coding-dojos
 
-Code from UMM CSci coding dojos
+Code from UMM CSci coding dojos.
