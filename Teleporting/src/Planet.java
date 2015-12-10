@@ -1,6 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Hashtable;
+import java.util.LinkedHashSet;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 public class Planet {
 	public int x;
@@ -23,27 +24,54 @@ public class Planet {
 
 	public static int minTotalDistance(Planet[] planets) {
 		PriorityQueue<Edge> edges = new PriorityQueue<Edge>();
-		int totalDistance = 0;
 
 		for (int i = 0; i < planets.length; i++) {
 			for (int j = (i + 1); j < planets.length; j++) {
 				edges.add(new Edge(planets[i], planets[j]));
 			}
 		}
-		
-		
 
-		// for (int i = 0; i < planets.length-1; i++) {
-		// // take planet i and find the distance between this planet and each
-		// other planet *after* it.
-		// int[] distances = new int[planets.length-2];
-		// for (int j = 1; j < planets.length-1; j++) {
-		// //
-		// }
-		// }
-		//
+		Hashtable<Planet, Set<Edge>> subTrees = new Hashtable<Planet, Set<Edge>>(
+				planets.length);
 
-		return edges.poll().distance;
+		while (!edges.isEmpty()) {
+			Edge currentEdge = edges.poll();
+			Set<Edge> fromTree = subTrees.get(currentEdge.fromPlanet);
+			Set<Edge> toTree = subTrees.get(currentEdge.toPlanet);
+
+			// handle nulls?
+
+			if (fromTree == null) {
+				if (toTree == null) {// both are null => new blob of connected
+										// nodes
+					fromTree = new LinkedHashSet<Edge>();
+					fromTree.add(currentEdge);
+					subTrees.put(currentEdge.toPlanet, fromTree);
+				} else {// add this new edge to the toTree blob
+					toTree.add(currentEdge);
+					subTrees.put(currentEdge.fromPlanet, toTree);
+				}
+			} else if (toTree == null) {// add this new edge to the fromTree
+										// blob
+				fromTree.add(currentEdge);
+				subTrees.put(currentEdge.toPlanet, fromTree);
+			} else if (toTree != fromTree) {// they aren't the same, merge them
+				fromTree.addAll(toTree);
+				for (Edge thisEdge : toTree) {
+					subTrees.put(thisEdge.fromPlanet, fromTree);
+					subTrees.put(thisEdge.toPlanet, fromTree);
+				}
+				fromTree.add(currentEdge);
+			}// else, we must have both planets covered. Next Edge!!
+		}
+
+		Set<Edge> spanningTree = subTrees.get(planets[0]);
+		int result = 0;
+		for (Edge thisEdge : spanningTree) {
+			result += thisEdge.distance;
+		}
+		return result;
+
 	}
 
 }

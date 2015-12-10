@@ -1,12 +1,12 @@
 
 public class Edge implements Comparable<Edge>{
-	public Planet toPlanet;
 	public Planet fromPlanet;
+	public Planet toPlanet;
 	public int distance;
 	
 	public Edge(Planet fromPlanet, Planet toPlanet) {
+		this.fromPlanet = fromPlanet;
 	this.toPlanet = toPlanet;
-	this.fromPlanet = fromPlanet;
 	this.distance = Planet.distance(fromPlanet, toPlanet);
 }
 
