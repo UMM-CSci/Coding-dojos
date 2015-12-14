@@ -46,6 +46,7 @@ public class Planet {
 										// nodes
 					fromTree = new LinkedHashSet<Edge>();
 					fromTree.add(currentEdge);
+                                        subTrees.put(currentEdge.fromPlanet, fromTree);
 					subTrees.put(currentEdge.toPlanet, fromTree);
 				} else {// add this new edge to the toTree blob
 					toTree.add(currentEdge);
