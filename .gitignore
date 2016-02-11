@@ -5,6 +5,7 @@
 
 # IDE support files
 *.class
+/src/*.class
 /.classpath
 /.launch
 /.project
