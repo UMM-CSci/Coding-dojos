@@ -14,74 +14,82 @@ public class LRU_Cache<K, V> {
 		}
 	}
 
+	public void set(K key, V value) {
+		Node<K, V> node = hash.get(key);
+		
+		if (null == node) { // node does not exist yet
+			if (hash.size() >= capacity) {
+				hash.remove(tail.key);
+				remove(tail);
+			}
+		
+			Node<K, V> newNode = new Node<K, V>(key, value);
+			hash.put(key, newNode);
+			add(newNode);
+		} else { // node exists, resets value
+			moveToFront(node);
+			node.value = value;
+		}
+	}
+
 	public V get(K key) {
 		Node<K, V> node = hash.get(key);
 		
 		if (null == node){
 			return null;
 		} else {
-			refresh(node);
+			moveToFront(node);
 			return node.value;
 		}
 	}
+	
+	private void moveToFront(Node<K, V> node) {
+		remove(node);
+		add(node);
+	}
 
-	public void set(K key, V value) {
-		Node<K, V> node = hash.get(key);
-		
-		if (null == node) { // node is not in Hashtable
-			// if over capacity, remove last node
-			if (hash.size() >= capacity) {
-				removeTail();
-			}
-			
-			add(key, value);
-		} else { // node exists, resets value
-			refresh(node);
-			node.value = value;
-		}
-	}
-	
-	public void add(K key, V value) {
-		Node<K, V> newNode = new Node<K, V>(key, value);
-		hash.put(key, newNode);
-		
-		if (null == head) {
-			head = newNode;
-			tail = newNode;
+	private void add(Node<K, V> node) {
+		if (null == tail) { // nothing in list
+			tail = node;
 		} else {
-			newNode.next = head;
-			head.previous = newNode;
-			head = newNode;
-		}
-	}
-	
-	public void refresh(Node<K, V> node) {	
-		if (null != node.previous) { // node is not at front of list
-			node.previous.next = node.next;
+			head.previous = node;
 		}
 		
-		if (null != node.next){ // node is not in back of list
-			node.next.previous = node.previous;
-		} else { // node is back of list
-			tail = node.previous;
-		}
-		
-		node.next = head;
-		head.previous = node;
 		node.previous = null;
+		node.next = head;
 		head = node;
 	}
 	
-	public void removeTail() {
-		hash.remove(tail.key);
-		
-		if (null != tail.previous){
-			tail.previous.next = null;
-			tail = tail.previous;
+	private void remove(Node<K, V> node) {
+		if (null == node.previous) { // node is head		
+			head = node.next;
 		} else {
-			head = null;
-			tail = null;
+			node.previous.next = node.next;
 		}
+		
+		if (null == node.next) { // node is tail
+			tail = node.previous;
+		} else {
+			node.next.previous = node.previous;
+		}
+		
+		node.next = null;
+		node.previous = null;
+	}
+	
+	public String toString() {
+		Node<K, V> indexNode = head;
+		String listString = "";
+		
+		while (indexNode != tail) {
+			listString += indexNode.key;
+			listString += ", ";
+			indexNode = indexNode.next;
+		}
+		
+		listString += tail.key;
+		
+		return "Hash: " + hash.keySet().toString() + ", List: [" + listString + "]";
 	}
 	
 	public class Node<X, Y> {
