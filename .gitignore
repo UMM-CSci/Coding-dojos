@@ -15,6 +15,9 @@
 /ivy*
 /eclipse
 
+*/.class
+*/.project
+
 # default HSQL database files for production mode
 /prodDb.*
 
@@ -44,3 +47,29 @@
 # other
 *.iws
 
+Ancestors/.classpath
+Ancestors/.gitignore
+Ancestors/src/
+AnimalShelter/
+Ants/.classpath
+Ants/.gitignore
+Ants/src/
+Bonfires/.classpath
+Bonfires/.gitignore
+ConvexHull/
+Digital/.classpath
+Digital/.gitignore
+Digital/src/
+HeatedExchange/.classpath
+JavaPlants/.classpath
+JavaPlants/src/
+KarelTheTrilogy/.DS_Store
+KarelTheTrilogy/.classpath
+KarelTheTrilogy/bin/
+KarelTheTrilogy/lib/
+KarelTheTrilogy/src/
+KarelTheTrilogy/worlds/
+Sets/.classpath
+Sets/.gitignore
+Sets/src/
+ShiftyList/
